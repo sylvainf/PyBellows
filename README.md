@@ -5,7 +5,7 @@
 
 A Python tool to generate cutting patterns for conical camera bellows for large format cameras (4×5, 5×7, 8×10, etc.).
 
-![Bellows Pattern Example](test.svg)
+![Bellows Pattern Example](bellows_pattern.jpg)
 
 ## Features
 
