@@ -5,7 +5,7 @@
 
 A Python tool to generate cutting patterns for conical camera bellows for large format cameras (4×5, 5×7, 8×10, etc.).
 
-![Bellows Pattern Example](examples/pattern_preview.png)
+![Bellows Pattern Example](test.svg)
 
 ## Features
 
@@ -23,11 +23,11 @@ A Python tool to generate cutting patterns for conical camera bellows for large 
 git clone https://github.com/yourusername/bellows-pattern-generator.git
 cd bellows-pattern-generator
 
+pip install cairosvg pillow
+
 # Basic usage (SVG only, no dependencies)
 python bellows_generator.py
 
-# For PNG/JPEG/PDF export (optional)
-pip install cairosvg pillow
 ```
 
 ## Quick Start
@@ -145,22 +145,6 @@ python bellows_generator.py --separate-faces --format png
 python bellows_generator.py --stroke-width 0.5 --stroke-color red
 ```
 
-## Pattern Structure
-
-The generated pattern consists of 4 faces:
-
-1. **Top Face** (trapezoid): Alternating ▽△ pairs, paired progression
-2. **Right Face** (rectangle): Continuous linear progression
-3. **Bottom Face** (trapezoid): Mirror of top face
-4. **Left Face** (rectangle): Continuous linear progression
-
-### Geometry Notes
-
-- **Trapezoids** progress by **pairs**: both trapezoids in a pair have the same base width
-- **Rectangles** progress **continuously**: width changes at every fold
-- Number of folds is always **even** (complete pairs)
-- Chamfers prevent material overlap at corners
-
 ## Construction Tips
 
 1. **Material**: Use light-tight flexible material (thin leather, coated fabric)
@@ -201,17 +185,6 @@ Page Splitting:
   --split-a3               Split into A3 pages
 ```
 
-## Examples
-
-Example patterns are included in the `examples/` directory:
-- `examples/4x5_standard.svg` - Standard 4×5 bellows
-- `examples/8x10_long.svg` - 8×10 with 500mm extension
-- `examples/separate_faces/` - Individual face files
-
-## Contributing
-
-Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
-
 ## License
 
 This project is licensed under the **Creative Commons Attribution-NonCommercial 4.0 International License** (CC BY-NC 4.0).
@@ -223,23 +196,3 @@ You are free to:
 Under the following terms:
 - **Attribution**: You must give appropriate credit
 - **NonCommercial**: You may not use the material for commercial purposes
-
-See [LICENSE](LICENSE) for full details.
-
-## Acknowledgments
-
-- Inspired by traditional large format camera bellows construction
-- Built for the analog photography community
-
-## Support
-
-- **Issues**: Report bugs via [GitHub Issues](https://github.com/yourusername/bellows-pattern-generator/issues)
-- **Discussions**: Ask questions in [GitHub Discussions](https://github.com/yourusername/bellows-pattern-generator/discussions)
-
-## Author
-
-Created with ❤️ for the large format photography community.
-
----
-
-**Note**: This tool generates patterns only. Actual bellows construction requires experience with fabric work, light-tight materials, and camera mechanics. Always test your bellows for light leaks before use.
