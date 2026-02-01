@@ -5,9 +5,8 @@ Large Format Camera Bellows Pattern Generator
 Generates cutting patterns for conical camera bellows with trapezoidal 
 top/bottom faces and rectangular side faces.
 
-Author: Camera Bellows Pattern Generator
+Author: Sylvain Ferrand
 License: CC BY-NC 4.0
-Repository: https://github.com/yourusername/bellows-pattern-generator
 """
 
 import math
