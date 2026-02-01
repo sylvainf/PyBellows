@@ -1,4 +1,4 @@
-# Large Format Camera Bellows Pattern Generator
+# Large and Medium Format Camera Bellows Pattern Generator
 
 [![License: CC BY-NC 4.0](https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc/4.0/)
 [![Python 3.7+](https://img.shields.io/badge/python-3.7+-blue.svg)](https://www.python.org/downloads/)
@@ -20,8 +20,8 @@ A Python tool to generate cutting patterns for conical camera bellows for large 
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/bellows-pattern-generator.git
-cd bellows-pattern-generator
+git clone https://github.com/sylvainf/PyBellows
+cd Pybellows
 
 pip install cairosvg pillow
 
