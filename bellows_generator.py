@@ -107,10 +107,10 @@ class ConicBellowsGenerator:
     def create_trapezoid(self, fold_index, x_center):
         """
         Create a TRAPEZOID that alternates orientation.
-        - Even folds (0,2,4...): narrow on top, wide on bottom (▽)
-        - Odd folds (1,3,5...): wide on top, narrow on bottom (△)
 
-        The 2 trapezoids in a pair have the same base width.
+        LOGIC MODIFIED:
+        - The 'Base Width' of the pair follows a linear interpolation from Front to Rear.
+        - The shape constraint |Long - Short| = 2 * stiffener_height is applied LOCALLY.
 
         Args:
             fold_index: Current fold index
@@ -119,30 +119,25 @@ class ConicBellowsGenerator:
         Returns:
             List of 4 points [(x,y), ...] defining the trapezoid
         """
-        # Width of this pair
-        base_width = self.get_pair_dimension(fold_index, self.front_w, self.rear_w)
-        current_pair = fold_index // 2
-        num_pairs = self.num_folds // 2
 
-        # Special handling for the last pair
-        if current_pair == num_pairs - 1:
-            # Last pair alternates between previous pair and rear_w
-            prev_pair_width = self.get_pair_dimension((num_pairs - 2) * 2, self.front_w, self.rear_w)
-            if fold_index % 2 == 0:
-                width_top = prev_pair_width
-                width_bottom = self.rear_w
-            else:
-                width_top = self.rear_w
-                width_bottom = prev_pair_width
+        # 1. Calculate Base Width using interpolation (preserves Front/Rear dimensions)
+        pair_index = fold_index // 2
+        num_pairs = self.num_folds // 2
+        ratio = pair_index / max(num_pairs - 1, 1)
+        width_base = self.front_w + (self.rear_w - self.front_w) * ratio
+
+        # 2. Apply Geometry Constraint LOCALLY for the shape (preserves fold geometry)
+        # The other side of the trapezoid is strictly Base + 2*H
+        width_expanded = width_base + (2.0 * self.stiffener_height)
+
+        if fold_index % 2 == 0:
+            # Even folds (0,2...): Narrow Top (Base) -> Wide Bottom (Expanded) (▽)
+            width_top = width_base
+            width_bottom = width_expanded
         else:
-            # Normal pairs: alternate with next pair
-            next_width = self.get_pair_dimension((current_pair + 1) * 2, self.front_w, self.rear_w)
-            if fold_index % 2 == 0:
-                width_top = base_width
-                width_bottom = next_width
-            else:
-                width_top = next_width
-                width_bottom = base_width
+            # Odd folds (1,3...): Wide Top (Expanded) -> Narrow Bottom (Base) (△)
+            width_top = width_expanded
+            width_bottom = width_base
 
         # Calculate vertical positions
         y_top = self.margin + fold_index * self.fold_cycle
@@ -160,7 +155,6 @@ class ConicBellowsGenerator:
             (x_center - hw_bottom + self.chamfer, y_bottom)
         ]
         return points
-
     def create_rectangle(self, fold_index, x_center):
         """
         Create a RECTANGLE with continuous progression.
